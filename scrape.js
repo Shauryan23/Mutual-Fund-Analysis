@@ -37,24 +37,56 @@ Pause(10, iterateOverMF);
 // Ad1 - //*[@id="dataTableId"]/tbody/tr[1]/td[1]/a
 // Ad2 - //*[@id="dataTableId"]/tbody/tr[12]/td[1]/a
 
-const findChildElements = (parentelem) => {
-  const childNum = parentelem.childElementCount;
-  // console.log('Inside Function: ' + childNum + '\n');
-  return childNum;
+extractCrisilAndOpenMF = async (parentelem) => {
+  const crisilRating = await parentelem
+    .findElement(By.css('.crisil_col'))
+    .getText();
+  console.log('Crisil Ratings: ' + crisilRating);
+
+  const link = await parentelem
+    .findElement(By.tagName('a'))
+    .getAttribute('href');
+  console.log('MF Link: ' + link);
 };
 
-async function iterateOverMF() {
+/* You have to add a chaining mechanism or async await mechanism with the map function to first get Crisil Rating and then
+click on anchor tag to navigate to MF page to get other attributes, these attributes will be fetched via a different function
+*/
+function iterateOverMF() {
   console.log('*-----------------Starting to Scrape MF-----------------*');
 
   const elems = driver.findElements(By.css('#dataTableId > tbody > tr'));
 
-  await map(elems, (e) =>
-    e.findElement(By.tagName('a')).getAttribute('href')
-  ).then(function (values) {
-    console.log(values);
+  // UnComment This Block
+  // map(elems, (e) => e.findElement(By.tagName('a')).getAttribute('href')).then(
+  //   function (values) {
+  //     console.log(values);
+  //   }
+  // );
+
+  map(elems, (e) => extractCrisilAndOpenMF(e)).then(function (data) {
+    console.log('first');
   });
 
-  Pause(7, QuitDriver);
+  // map(elems, (e) => e.findElement(By.css('.crisil_col')).getText())
+  //   .then(function (values) {
+  //     console.log(values);
+  //   })
+  //   .then(function () {
+  //     e.findElement(By.tagName('a')).getAttribute('href');
+  //   })
+  //   .then(function (values) {
+  //     console.log(values);
+  //   });
+
+  // map(elems, (e) => e).then(function (parentelem) {
+  //   const crisilRating = parentelem.findElement(By.tagName('span')).getText();
+  //   parentelem.findElement(By.tagName('a')).click();
+  //   return parentelem;
+  // });
+  // // .then(function (parentelem) {});
+
+  Pause(10, QuitDriver);
 }
 
 // function ScrapeExample() {
