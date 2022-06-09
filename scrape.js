@@ -32,30 +32,158 @@ Pause(10, iterateOverMF);
  * Scrapping the page for the demonstration of various selenium elements and methods
  */
 
-// First XPath - //*[@id="dataTableId"]/tbody/tr[2]/td[1]/a
-// Last XPath - //*[@id="dataTableId"]/tbody/tr[38]/td[1]/a
-// Ad1 - //*[@id="dataTableId"]/tbody/tr[1]/td[1]/a
-// Ad2 - //*[@id="dataTableId"]/tbody/tr[12]/td[1]/a
+const extractMFData = async (fetchedDriver) => {
+  const MFName = await fetchedDriver
+    .findElement(By.className('page_heading'))
+    .getText();
 
-extractCrisilAndOpenMF = async (parentelem) => {
+  const MFCategory = await fetchedDriver
+    .findElement(By.className('sub_category_text'))
+    .getText();
+
+  const MFFundSize = await fetchedDriver
+    .findElement(
+      By.xpath(
+        '//*[@id="mc_content"]/div/section[1]/div/div[1]/div[2]/div[3]/div[1]/table/tbody/tr[1]/td[1]/span[3]'
+      )
+    )
+    .getText();
+
+  const MFExpenseRatio = await fetchedDriver
+    .findElement(
+      By.xpath(
+        '//*[@id="mc_content"]/div/section[1]/div/div[1]/div[2]/div[3]/div[1]/table/tbody/tr[1]/td[2]/span[3]'
+      )
+    )
+    .getText();
+
+  const MFRisk = await fetchedDriver
+    .findElement(
+      By.xpath(
+        '//*[@id="mc_content"]/div/section[1]/div/div[1]/div[2]/div[3]/div[2]/div/div[2]/span'
+      )
+    )
+    .getText();
+
+  const _1YrReturn = await fetchedDriver
+    .findElement(
+      By.xpath(
+        '//*[@id="mc_content"]/div/section[6]/div/div[1]/div[1]/table/tbody/tr[6]/td[5]'
+      )
+    )
+    .getText();
+
+  const _3YrReturn = await fetchedDriver
+    .findElement(
+      By.xpath(
+        '//*[@id="mc_content"]/div/section[6]/div/div[1]/div[1]/table/tbody/tr[8]/td[5]'
+      )
+    )
+    .getText();
+
+  const _5YrReturn = await fetchedDriver
+    .findElement(
+      By.xpath(
+        '//*[@id="mc_content"]/div/section[6]/div/div[1]/div[1]/table/tbody/tr[9]/td[5]'
+      )
+    )
+    .getText();
+
+  const stdDeviationRatio = await fetchedDriver
+    .findElement(
+      By.xpath(
+        '//*[@id="mc_content"]/div/section[9]/div/ul/li[1]/div/div[2]/span[1]'
+      )
+    )
+    .getText();
+
+  const betaRatio = await fetchedDriver
+    .findElement(
+      By.xpath(
+        '//*[@id="mc_content"]/div/section[9]/div/ul/li[2]/div/div[2]/span[1]'
+      )
+    )
+    .getText();
+
+  const sharpRatio = await fetchedDriver
+    .findElement(
+      By.xpath(
+        '//*[@id="mc_content"]/div/section[9]/div/ul/li[3]/div/div[2]/span[1]'
+      )
+    )
+    .getText();
+
+  const sortinoRatio = await fetchedDriver
+    .findElement(
+      By.xpath(
+        '//*[@id="mc_content"]/div/section[9]/div/ul/li[4]/div/div[2]/span[1]'
+      )
+    )
+    .getText();
+
+  const alphaRatio = await fetchedDriver
+    .findElement(
+      By.xpath(
+        '//*[@id="mc_content"]/div/section[9]/div/ul/li[5]/div/div[2]/span[1]'
+      )
+    )
+    .getText();
+
+  console.log(
+    'NAME: ' +
+      MFName +
+      '\tCATEGORY: ' +
+      MFCategory +
+      '\tFUNDSIZE: ' +
+      MFFundSize +
+      '\tEXPENSERATIO: ' +
+      MFExpenseRatio +
+      '\tRISK: ' +
+      MFRisk +
+      '\t1Yr: ' +
+      _1YrReturn +
+      '\t3Yr: ' +
+      _3YrReturn +
+      '\t5Yr: ' +
+      _5YrReturn +
+      '\tALPHA: ' +
+      alphaRatio +
+      '\tBETA: ' +
+      betaRatio +
+      '\tSTD DEVIATION: ' +
+      stdDeviationRatio +
+      '\tSORTINO: ' +
+      sortinoRatio +
+      '\tSHARP: ' +
+      sharpRatio
+  );
+};
+
+const extractCrisilAndOpenMF = async (parentelem) => {
   const crisilRating = await parentelem
     .findElement(By.css('.crisil_col'))
     .getText();
-  console.log('Crisil Ratings: ' + crisilRating);
+  // console.log('Crisil Ratings: ' + crisilRating);
 
-  const link = await parentelem
-    .findElement(By.tagName('a'))
-    .getAttribute('href');
-  console.log('MF Link: ' + link);
+  // const MFlink = await parentelem
+  //   .findElement(By.tagName('a'))
+  //   .getAttribute('href')
+  //   .click();
+
+  const MFlink = await parentelem.findElement(By.tagName('a')).click();
+
+  console.log('Type: ' + typeof MFlink);
+  console.log('Object: ' + JSON.stringify(MFlink));
+
+  // console.log('MF Link: ' + link);
+
+  // extractMFData(MFlink);
+  return MFlink;
 };
 
-/* You have to add a chaining mechanism or async await mechanism with the map function to first get Crisil Rating and then
-click on anchor tag to navigate to MF page to get other attributes, these attributes will be fetched via a different function
-*/
 function iterateOverMF() {
-  console.log('*-----------------Starting to Scrape MF-----------------*');
-
   const elems = driver.findElements(By.css('#dataTableId > tbody > tr'));
+  // .then((data) => console.log('Data: ' + JSON.stringify(data)));
 
   // UnComment This Block
   // map(elems, (e) => e.findElement(By.tagName('a')).getAttribute('href')).then(
@@ -64,27 +192,13 @@ function iterateOverMF() {
   //   }
   // );
 
-  map(elems, (e) => extractCrisilAndOpenMF(e)).then(function (data) {
-    console.log('first');
-  });
-
-  // map(elems, (e) => e.findElement(By.css('.crisil_col')).getText())
-  //   .then(function (values) {
-  //     console.log(values);
-  //   })
-  //   .then(function () {
-  //     e.findElement(By.tagName('a')).getAttribute('href');
-  //   })
-  //   .then(function (values) {
-  //     console.log(values);
-  //   });
-
-  // map(elems, (e) => e).then(function (parentelem) {
-  //   const crisilRating = parentelem.findElement(By.tagName('span')).getText();
-  //   parentelem.findElement(By.tagName('a')).click();
-  //   return parentelem;
-  // });
-  // // .then(function (parentelem) {});
+  map(elems, (e) => extractCrisilAndOpenMF(e))
+    .then(function (data) {
+      extractMFData(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
   Pause(10, QuitDriver);
 }
