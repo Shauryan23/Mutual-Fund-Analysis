@@ -10,6 +10,8 @@ driver.get(
   'https://www.moneycontrol.com/mutual-funds/performance-tracker/returns/aggressive-hybrid-fund.html'
 );
 
+var cntr = 0;
+
 /**
  * Adding seleinum wait
  * Delay in seconds
@@ -43,124 +45,124 @@ const scrapeMF = async (parentelem) => {
 
   await driver.switchTo().window(windows[1]);
 
-  const MFName = await driver
-    .findElement(By.className('page_heading'))
-    .getText();
+  // const MFName = await driver
+  //   .findElement(By.className('page_heading'))
+  //   .getText();
 
-  const MFCategory = await driver
-    .findElement(By.className('sub_category_text'))
-    .getText();
+  // const MFCategory = await driver
+  //   .findElement(By.className('sub_category_text'))
+  //   .getText();
 
-  const MFLaunch = 'NULL';
+  // const MFLaunch = 'NULL';
 
-  const MFFundSize = await driver
-    .findElement(
-      By.xpath(
-        '//*[@id="mc_content"]/div/section[1]/div/div[1]/div[2]/div[3]/div[1]/table/tbody/tr[1]/td[1]/span[3]'
-      )
-    )
-    .getText();
+  // const MFFundSize = await driver
+  //   .findElement(
+  //     By.xpath(
+  //       '//*[@id="mc_content"]/div/section[1]/div/div[1]/div[2]/div[3]/div[1]/table/tbody/tr[1]/td[1]/span[3]'
+  //     )
+  //   )
+  //   .getText();
 
-  const MFExpenseRatio = await driver
-    .findElement(
-      By.xpath(
-        '//*[@id="mc_content"]/div/section[1]/div/div[1]/div[2]/div[3]/div[1]/table/tbody/tr[1]/td[2]/span[3]'
-      )
-    )
-    .getText();
+  // const MFExpenseRatio = await driver
+  //   .findElement(
+  //     By.xpath(
+  //       '//*[@id="mc_content"]/div/section[1]/div/div[1]/div[2]/div[3]/div[1]/table/tbody/tr[1]/td[2]/span[3]'
+  //     )
+  //   )
+  //   .getText();
 
-  const MFRisk = await driver
-    .findElement(
-      By.xpath(
-        '//*[@id="mc_content"]/div/section[1]/div/div[1]/div[2]/div[3]/div[2]/div/div[2]/span'
-      )
-    )
-    .getText();
+  // const MFRisk = await driver
+  //   .findElement(
+  //     By.xpath(
+  //       '//*[@id="mc_content"]/div/section[1]/div/div[1]/div[2]/div[3]/div[2]/div/div[2]/span'
+  //     )
+  //   )
+  //   .getText();
 
-  const _1YrReturn = await driver
-    .findElement(
-      By.xpath(
-        '//*[@id="mc_content"]/div/section[6]/div/div[1]/div[1]/table/tbody/tr[6]/td[5]'
-      )
-    )
-    .getText();
+  // const _1YrReturn = await driver
+  //   .findElement(
+  //     By.xpath(
+  //       '//*[@id="mc_content"]/div/section[6]/div/div[1]/div[1]/table/tbody/tr[6]/td[5]'
+  //     )
+  //   )
+  //   .getText();
 
-  const _3YrReturn = await driver
-    .findElement(
-      By.xpath(
-        '//*[@id="mc_content"]/div/section[6]/div/div[1]/div[1]/table/tbody/tr[8]/td[5]'
-      )
-    )
-    .getText();
+  // const _3YrReturn = await driver
+  //   .findElement(
+  //     By.xpath(
+  //       '//*[@id="mc_content"]/div/section[6]/div/div[1]/div[1]/table/tbody/tr[8]/td[5]'
+  //     )
+  //   )
+  //   .getText();
 
-  const _5YrReturn = await driver
-    .findElement(
-      By.xpath(
-        '//*[@id="mc_content"]/div/section[6]/div/div[1]/div[1]/table/tbody/tr[9]/td[5]'
-      )
-    )
-    .getText();
+  // const _5YrReturn = await driver
+  //   .findElement(
+  //     By.xpath(
+  //       '//*[@id="mc_content"]/div/section[6]/div/div[1]/div[1]/table/tbody/tr[9]/td[5]'
+  //     )
+  //   )
+  //   .getText();
 
-  const stdDeviationRatio = await driver
-    .findElement(
-      By.xpath(
-        '//*[@id="mc_content"]/div/section[9]/div/ul/li[1]/div/div[2]/span[1]'
-      )
-    )
-    .getText();
+  // const stdDeviationRatio = await driver
+  //   .findElement(
+  //     By.xpath(
+  //       '//*[@id="mc_content"]/div/section[9]/div/ul/li[1]/div/div[2]/span[1]'
+  //     )
+  //   )
+  //   .getText();
 
-  const betaRatio = await driver
-    .findElement(
-      By.xpath(
-        '//*[@id="mc_content"]/div/section[9]/div/ul/li[2]/div/div[2]/span[1]'
-      )
-    )
-    .getText();
+  // const betaRatio = await driver
+  //   .findElement(
+  //     By.xpath(
+  //       '//*[@id="mc_content"]/div/section[9]/div/ul/li[2]/div/div[2]/span[1]'
+  //     )
+  //   )
+  //   .getText();
 
-  const sharpRatio = await driver
-    .findElement(
-      By.xpath(
-        '//*[@id="mc_content"]/div/section[9]/div/ul/li[3]/div/div[2]/span[1]'
-      )
-    )
-    .getText();
+  // const sharpRatio = await driver
+  //   .findElement(
+  //     By.xpath(
+  //       '//*[@id="mc_content"]/div/section[9]/div/ul/li[3]/div/div[2]/span[1]'
+  //     )
+  //   )
+  //   .getText();
 
-  const sortinoRatio = await driver
-    .findElement(
-      By.xpath(
-        '//*[@id="mc_content"]/div/section[9]/div/ul/li[4]/div/div[2]/span[1]'
-      )
-    )
-    .getText();
+  // const sortinoRatio = await driver
+  //   .findElement(
+  //     By.xpath(
+  //       '//*[@id="mc_content"]/div/section[9]/div/ul/li[4]/div/div[2]/span[1]'
+  //     )
+  //   )
+  //   .getText();
 
-  const alphaRatio = await driver
-    .findElement(
-      By.xpath(
-        '//*[@id="mc_content"]/div/section[9]/div/ul/li[5]/div/div[2]/span[1]'
-      )
-    )
-    .getText();
+  // const alphaRatio = await driver
+  //   .findElement(
+  //     By.xpath(
+  //       '//*[@id="mc_content"]/div/section[9]/div/ul/li[5]/div/div[2]/span[1]'
+  //     )
+  //   )
+  //   .getText();
 
   await driver.close();
   await driver.switchTo().window(parent);
 
-  MFObj = new MutualFund(
-    MFName,
-    MFCategory,
-    MFLaunch,
-    MFCrisilRating,
-    MFFundSize,
-    _1YrReturn,
-    _3YrReturn,
-    _5YrReturn,
-    MFRisk,
-    MFExpenseRatio,
-    sharpRatio,
-    sortinoRatio,
-    alphaRatio,
-    betaRatio,
-    stdDeviationRatio
-  );
+  // MFObj = new MutualFund(
+  //   MFName,
+  //   MFCategory,
+  //   MFLaunch,
+  //   MFCrisilRating,
+  //   MFFundSize,
+  //   _1YrReturn,
+  //   _3YrReturn,
+  //   _5YrReturn,
+  //   MFRisk,
+  //   MFExpenseRatio,
+  //   sharpRatio,
+  //   sortinoRatio,
+  //   alphaRatio,
+  //   betaRatio,
+  //   stdDeviationRatio
+  // );
 };
 
 async function iterateMF() {
@@ -176,7 +178,10 @@ async function iterateMF() {
     } catch (err) {
       text = 'NULL';
     }
-    if (text !== 'Sponsored Adv') scrapeMF(e);
+    if (text !== 'Sponsored Adv') {
+      scrapeMF(e);
+      cntr++;
+    }
   });
 
   // map(elems, (e) => scrapeMF(e))
